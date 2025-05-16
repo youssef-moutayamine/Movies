@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { movies } from './allMovies'
 import { CountriesJson } from '../../constant'
-import { useMovieContext } from '../../context/MovieContext'
+import { useMovieContext } from '../../context/index'
 
 const Section = () => {
     const [search, setSearch] = useState("")

@@ -1,14 +1,12 @@
 import React from 'react';
-import { movies } from '../home/allMovies';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CountriesJson } from '../../constant';
-import { useMovieContext } from '../../context/MovieContext';
+import { useMovieContext } from '../../context/index';
 
 const AboutPage = () => {
     const { selectedMovie } = useMovieContext();
     const navigate = useNavigate();
     
-    // If no movie is selected, redirect to home page
     if (!selectedMovie) {
         return (
             <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white">
@@ -23,7 +21,6 @@ const AboutPage = () => {
         );
     }
 
-    // Otherwise, display movie details
     const movie = selectedMovie;
 
     return (

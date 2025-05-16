@@ -1,0 +1,126 @@
+import React from 'react';
+import { movies } from '../home/allMovies';
+import { useParams, Link } from 'react-router-dom';
+import { CountriesJson } from '../../constant';
+
+const AboutPage = () => {
+    const { title } = useParams();
+    const movie = movies.find(e => e.title === decodeURIComponent(title));
+
+    if (!movie) {
+        return (
+            <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white">
+                <h1 className="text-3xl mb-4">Movie not found</h1>
+                <Link to="/" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full">
+                    Back to Home
+                </Link>
+            </div>
+        );
+    }
+
+    return (
+        <div className="min-h-screen  bg-gray-900 text-white pb-16">
+            <div
+                className="w-full h-[50vh] relative bg-cover bg-center bg-no-repeat"
+                style={{
+                    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.8)), url(${movie.poster})`,
+                    backgroundPosition: 'center 20%'
+                }}
+            >
+                <div className="absolute -bottom-0 left-0 w-full p-8 pb-16">
+                    <div className="container mx-auto flex items-end ">
+                        <div className="m-8">
+
+                            <img src={movie.poster} alt={movie.title} className="w-64  h-96 object-cover rounded-lg shadow-2xl" />
+
+                        </div>
+                        <div className="flex-1">
+                            <h1 className="text-5xl font-bold mb-4">{movie.title}</h1>
+                            <div className="flex items-center mb-4">
+                                <span className="bg-blue-600 text-white px-3 py-1 rounded-full mr-3">
+                                    {movie.type}
+                                </span>
+                                <span className="text-gray-300 mr-3">
+                                    {movie.date}
+                                </span>
+                                <span className="text-gray-300">
+                                    {movie.time}
+                                </span>
+                            </div>
+                            <p className="text-xl text-gray-300 max-w-3xl">
+                                {movie.description}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div className="container mx-auto px-8 mt-16">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div className="lg:col-span-2">
+                        <h2 className="text-3xl font-bold mb-6">About the Movie</h2>
+                        <p className="text-gray-300 mb-6 text-lg">
+                            {movie.description}
+                        </p>
+
+
+                        <div className="bg-gray-800 p-6 rounded-lg">
+                            <h3 className="text-xl font-bold mb-4">Movie Details</h3>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <p className="text-gray-400">Release Date</p>
+                                    <p>{movie.date}</p>
+                                </div>
+                                <div>
+                                    <p className="text-gray-400">Showing Time</p>
+                                    <p>{movie.time}</p>
+                                </div>
+                                <div>
+                                    <p className="text-gray-400">Genre</p>
+                                    <p>{movie.type}</p>
+                                </div>
+                                <div>
+                                    <p className="text-gray-400">Movie ID</p>
+                                    <p>#{movie.id}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h2 className="text-3xl font-bold mb-6">Book Tickets</h2>
+                        <div className="bg-gray-800 p-6 rounded-lg">
+                            <div className="mb-6">
+                                <p className="text-gray-400 mb-2">Date</p>
+                                <div className="bg-gray-700 p-3 rounded font-bold">
+                                    {movie.date}
+                                </div>
+                            </div>
+                            <div className="mb-6">
+                                <p className="text-gray-400 mb-2">Time</p>
+                                <div className="bg-gray-700 p-3 rounded font-bold">
+                                    {movie.time}
+                                </div>
+                            </div>
+                            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-bold transition-all">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+          
+
+            <div className="container mx-auto px-8 mt-16 text-center">
+                <Link to="/" className="inline-block bg-gray-800 hover:bg-gray-700 text-white px-8 py-3 rounded-full transition-all">
+                    Back to Movies
+                </Link>
+            </div>
+        </div>
+        
+    );
+};
+
+export default AboutPage;

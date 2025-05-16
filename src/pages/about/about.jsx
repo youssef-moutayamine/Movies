@@ -1,25 +1,33 @@
 import React from 'react';
 import { movies } from '../home/allMovies';
-import { useParams, Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CountriesJson } from '../../constant';
+import { useMovieContext } from '../../context/MovieContext';
 
 const AboutPage = () => {
-    const { title } = useParams();
-    const movie = movies.find(e => e.title === decodeURIComponent(title));
-
-    if (!movie) {
+    const { selectedMovie } = useMovieContext();
+    const navigate = useNavigate();
+    
+    // If no movie is selected, redirect to home page
+    if (!selectedMovie) {
         return (
             <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white">
-                <h1 className="text-3xl mb-4">Movie not found</h1>
-                <Link to="/" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full">
+                <h1 className="text-3xl mb-4">No movie selected</h1>
+                <button 
+                    onClick={() => navigate('/')}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full"
+                >
                     Back to Home
-                </Link>
+                </button>
             </div>
         );
     }
 
+    // Otherwise, display movie details
+    const movie = selectedMovie;
+
     return (
-        <div className="min-h-screen  bg-gray-900 text-white pb-16">
+        <div className="min-h-screen bg-gray-900 text-white pb-16">
             <div
                 className="w-full h-[50vh] relative bg-cover bg-center bg-no-repeat"
                 style={{
@@ -30,9 +38,7 @@ const AboutPage = () => {
                 <div className="absolute -bottom-0 left-0 w-full p-8 pb-16">
                     <div className="container mx-auto flex items-end ">
                         <div className="m-8">
-
-                            <img src={movie.poster} alt={movie.title} className="w-64  h-96 object-cover rounded-lg shadow-2xl" />
-
+                            <img src={movie.poster} alt={movie.title} className="w-64 h-96 object-cover rounded-lg shadow-2xl" />
                         </div>
                         <div className="flex-1">
                             <h1 className="text-5xl font-bold mb-4">{movie.title}</h1>
@@ -55,7 +61,6 @@ const AboutPage = () => {
                 </div>
             </div>
 
-
             <div className="container mx-auto px-8 mt-16">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div className="lg:col-span-2">
@@ -63,7 +68,6 @@ const AboutPage = () => {
                         <p className="text-gray-300 mb-6 text-lg">
                             {movie.description}
                         </p>
-
 
                         <div className="bg-gray-800 p-6 rounded-lg">
                             <h3 className="text-xl font-bold mb-4">Movie Details</h3>
@@ -111,15 +115,15 @@ const AboutPage = () => {
                 </div>
             </div>
 
-          
-
             <div className="container mx-auto px-8 mt-16 text-center">
-                <Link to="/" className="inline-block bg-gray-800 hover:bg-gray-700 text-white px-8 py-3 rounded-full transition-all">
+                <button 
+                    onClick={() => navigate('/')}
+                    className="inline-block bg-gray-800 hover:bg-gray-700 text-white px-8 py-3 rounded-full transition-all"
+                >
                     Back to Movies
-                </Link>
+                </button>
             </div>
         </div>
-        
     );
 };
 
